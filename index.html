@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="Happy Birthday Website 2.0 | Aoudumber Bade">
+  <meta name="github" content="https://github.com/Aoudumber-Bade">
+  <title>Birthday Gift Animation</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+  <!-- ❤️ Floating Heart Cursor Script (restored and working) -->
+  <script type="text/javascript">
+  var colours = ['#ff3366', '#ff6699', '#ff33cc', '#ff99cc', '#ff66b2', '#ff0066']; 
+  var minisize = 16; 
+  var maxisize = 28; 
+  var hearts = 66; 
+  var over_or_under = "over"; 
+
+  var x = ox = 400;
+  var y = oy = 300;
+  var swide = 800;
+  var shigh = 600;
+  var sleft = sdown = 0;
+  var herz = [];
+  var herzx = [];
+  var herzy = [];
+  var herzs = [];
+  var kiss = false;
+
+  if (typeof('addRVLoadEvent') != 'function') function addRVLoadEvent(funky) {
+    var oldonload = window.onload;
+    if (typeof(oldonload) != 'function') window.onload = funky;
+    else window.onload = function() {
+      if (oldonload) oldonload();
+      funky();
+    }
+  }
+
+  addRVLoadEvent(mwah);
+
+  function mwah() { if (document.getElementById) {
+    var i, heart;
+    for (i = 0; i < hearts; i++) {
+      heart = createDiv("auto", "auto");
+      heart.style.visibility = "hidden";
+      heart.style.zIndex = (over_or_under == "over") ? "1001" : "0";
+      heart.style.color = colours[i % colours.length];
+      heart.style.pointerEvents = "none";
+      heart.style.opacity = 0.75;
+      heart.appendChild(document.createTextNode(String.fromCharCode(9829)));
+      document.body.appendChild(heart);
+      herz[i] = heart;
+      herzy[i] = false;
+    }
+    set_scroll();
+    set_width();
+    herzle();
+  }}
+
+  function herzle() {
+    var c;
+    if (Math.abs(x - ox) > 1 || Math.abs(y - oy) > 1) {
+      ox = x;
+      oy = y;
+      for (c = 0; c < hearts; c++) if (herzy[c] === false) {
+        herz[c].firstChild.nodeValue = String.fromCharCode(9829);
+        herz[c].style.left = (herzx[c] = x - minisize / 2) + "px";
+        herz[c].style.top = (herzy[c] = y - minisize) + "px";
+        herz[c].style.fontSize = minisize + "px";
+        herz[c].style.fontWeight = 'normal';
+        herz[c].style.visibility = 'visible';
+        herzs[c] = minisize;
+        break;
+      }
+    }
+    for (c = 0; c < hearts; c++) if (herzy[c] !== false) blow_me_a_kiss(c);
+    setTimeout(herzle, 40);
+  }
+
+  document.onmousedown = pucker;
+  document.onmouseup = function() { clearTimeout(kiss); };
+
+  function pucker() {
+    ox = -1;
+    oy = -1;
+    kiss = setTimeout(pucker, 100);
+  }
+
+  function blow_me_a_kiss(i) {
+    herzy[i] -= herzs[i] / minisize + i % 2;
+    herzx[i] += (i % 5 - 2) / 5;
+    if (herzy[i] < sdown - herzs[i] || herzx[i] < sleft - herzs[i] || herzx[i] > sleft + swide - herzs[i]) {
+      herz[i].style.visibility = "hidden";
+      herzy[i] = false;
+    }
+    else if (herzs[i] > minisize + 2 && Math.random() < .5 / hearts) break_my_heart(i);
+    else {
+      if (Math.random() < maxisize / herzy[i] && herzs[i] < maxisize) herz[i].style.fontSize = (++herzs[i]) + "px";
+      herz[i].style.top = herzy[i] + "px";
+      herz[i].style.left = herzx[i] + "px";
+    }
+  }
+
+  function break_my_heart(i) {
+    herz[i].firstChild.nodeValue = String.fromCharCode(9676);
+    herz[i].style.fontWeight = 'bold';
+    herzy[i] = false;
+    setTimeout(() => herz[i].style.visibility = "hidden", 400);
+  }
+
+  document.onmousemove = mouse;
+  function mouse(e) {
+    if (e) { y = e.pageY; x = e.pageX; }
+    else { set_scroll(); y = event.y + sdown; x = event.x + sleft; }
+  }
+
+  window.onresize = set_width;
+  function set_width() {
+    var sw_min = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var sh_min = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    swide = sw_min;
+    shigh = sh_min;
+  }
+
+  window.onscroll = set_scroll;
+  function set_scroll() {
+    sdown = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    sleft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
+  }
+
+  function createDiv(height, width) {
+    var div = document.createElement("div");
+    div.style.position = "absolute";
+    div.style.height = height;
+    div.style.width = width;
+    div.style.overflow = "hidden";
+    div.style.backgroundColor = "transparent";
+    return div;
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- ===== COUNTDOWN BANNER ===== -->
+  <div id="cdBanner">
+    <span>🎂 Raksha's birthday in:</span>
+    <span class="cd-block"><span id="cdDays">0</span><small>days</small></span>
+    <span class="cd-block"><span id="cdHours">0</span><small>hrs</small></span>
+    <span class="cd-block"><span id="cdMins">0</span><small>mins</small></span>
+    <span class="cd-block"><span id="cdSecs">0</span><small>secs</small></span>
+  </div>
+
+  <!-- 👇 Your entire original content (untouched) -->
+  <!-- START -->
+  <div id="wrapper">
+    <div class="flag__birthday">
+      <img src="./images/1.png" alt="" width="350" class="flag__left">
+      <img src="./images/1.png" alt="" width="350" class="flag__right">
+    </div>
+
+    <div class="content">
+      <div class="left">
+        <div class="title">
+          <h1 class="happy">
+            <span style="--t: 4s;">H</span>
+            <span style="--t: 4.2s;">a</span>
+            <span style="--t: 4.4s;">p</span>
+            <span style="--t: 4.6s;">p</span>
+            <span style="--t: 4.8s;">y</span>
+          </h1>
+          <h1 class="birthday">
+            <span style="--t: 5s;">B</span>
+            <span style="--t: 5.2s;">i</span>
+            <span style="--t: 5.4s;">r</span>
+            <span style="--t: 5.6s;">t</span>
+            <span style="--t: 5.8s;">h</span>
+            <span style="--t: 6s;">d</span>
+            <span style="--t: 6.2s;">a</span>
+            <span style="--t: 6.4s;">y</span>
+          </h1>
+          <div class="hat">
+            <img src="./images/hat.png" alt="" width="130">
+          </div>
+        </div>
+
+        <div class="date__of__birth">
+          <span></span>
+        </div>
+
+        <div class="btn">
+          <button id="btn__letter">
+            Click here 
+            <i class="fa-regular fa-envelope"></i>
+          </button>
+          <button id="btn__memories">
+            Our Memories
+            <i class="fa-regular fa-images"></i>
+          </button>
+          <button id="btn__wishes">
+            Birthday Wishes
+            <i class="fa-regular fa-star"></i>
+          </button>
+          <button id="btn__cake">
+            Make a Wish
+            <i class="fa-solid fa-fire"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="box__account">
+          <div class="image">
+            <img src="./images/mem7.jpeg" alt="">
+          </div>
+          <div class="name">
+            <i class="fa-solid fa-heart"></i>
+            <span id="secretName">Raksha</span>
+            <i class="fa-solid fa-heart"></i>
+          </div>
+          <div class="balloon_one">
+            <img width="100px" src="./images/balloon1.png" alt="">
+          </div>
+          <div class="balloon_two">
+            <img width="100px" src="./images/balloon2.png" alt="">
+          </div>
+        </div>
+
+        <div class="cricle">
+          <div class="text__cricle">
+            <span style="--i: 1;">h</span>
+            <span style="--i: 2;">a</span>
+            <span style="--i: 3;">p</span>
+            <span style="--i: 4;">p</span>
+            <span style="--i: 5;">y</span>
+            <span style="--i: 6;">-</span>
+            <span style="--i: 7;">b</span>
+            <span style="--i: 8;">i</span>
+            <span style="--i: 9;">r</span>
+            <span style="--i: 10;">t</span>
+            <span style="--i: 11;">h</span>
+            <span style="--i: 12;">d</span>
+            <span style="--i: 13;">a</span>
+            <span style="--i: 14;">y</span>
+            <span style="--i: 15;">-</span>
+          </div>
+          <i class="fa-solid fa-heart"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="decorate_star star1" style="--t: 15s;"></div>
+    <div class="decorate_star star2" style="--t: 15.2s;"></div>
+    <div class="decorate_star star3" style="--t: 15.4s;"></div>
+    <div class="decorate_star star4" style="--t: 15.6s;"></div>
+    <div class="decorate_star star5" style="--t: 15.8s;"></div>
+
+    <div class="decorate_flower--one" style="--t: 15s;">
+      <img width="20" src="./images/decorate_flower.png" alt="">
+    </div>
+    <div class="decorate_flower--two" style="--t: 15.3s;">
+      <img width="20" src="./images/decorate_flower.png" alt="">
+    </div>
+    <div class="decorate_flower--three" style="--t: 15.6s;">
+      <img width="20" src="./images/decorate_flower.png" alt="">
+    </div>
+
+    <div class="decorate_bottom">
+      <img src="./images/decorate.png" alt="" width="100">
+    </div>
+    <div class="smiley__icon">
+      <img src="./images/smiley_icon.png" alt="" width="100">
+    </div>
+
+    <!-- Letter Box -->
+    <div class="box__letter">
+      <div class="letter__border">
+        <div class="letter">
+          <div class="title__letter"></div>
+          <div class="content__letter">
+            <div class="left">
+              <img id="heart__letter" src="https://media0.giphy.com/media/c76IJLufpNwSULPk77/giphy.gif" alt="">
+              <img class="heart heart_1" style="--t: 0.2s" width="20" src="./images/heart.png" alt="">
+              <img class="heart heart_2" style="--t: 0.4s" width="20" src="./images/heart.png" alt="">
+              <img class="heart heart_3" style="--t: 0.6s" width="20" src="./images/heart.png" alt="">
+              <img class="heart heart_4" style="--t: 0.8s" width="20" src="./images/heart.png" alt="">
+            </div>
+            <div class="right">
+              <div class="love__img">
+                <img src="https://media4.giphy.com/media/W4jyjmIpnw6e38B6Qc/giphy.gif" alt="" width="220">
+              </div>
+              <div class="text__letter">
+                <p></p>
+              </div>
+              <img id="mewmew" width="80" src="./images/mewmew.gif" alt="">
+            </div>
+          </div>
+        </div>
+        <div class="close">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MEMORIES GALLERY ===== -->
+    <div class="box__memories">
+      <div class="memories__border">
+        <h2 class="memories__title">📸 Bestie Memories 🎉</h2>
+        <div class="memories__grid">
+          <div class="polaroid" style="--r: -4deg; --d: 0.05s">
+            <img src="./images/mem1.jpeg" alt="Memory 1">
+            <p>Grandma's Princess 👑</p>
+          </div>
+          <div class="polaroid" style="--r: 3deg; --d: 0.1s">
+            <img src="./images/mem2.jpeg" alt="Memory 2">
+            <p>Timeless Grace🎉</p>
+          </div>
+          <div class="polaroid" style="--r: -2deg; --d: 0.15s">
+            <img src="./images/mem3.jpeg" alt="Memory 3">
+            <p>Angel Smile 😇</p>
+          </div>
+          <div class="polaroid" style="--r: 5deg; --d: 0.2s">
+            <img src="./images/mem4.jpeg" alt="Memory 4">
+            <p> Unbreakable Bond🌟</p>
+          </div>
+          <div class="polaroid" style="--r: -3deg; --d: 0.25s">
+            <img src="./images/mem5.jpeg" alt="Memory 5">
+            <p>Dreamy Smile✨</p>
+          </div>
+          <div class="polaroid" style="--r: 2deg; --d: 0.3s">
+            <img src="./images/mem6.jpeg" alt="Memory 6">
+            <p>Dream Chaser 🌟</p>
+          </div>
+          <div class="polaroid" style="--r: -5deg; --d: 0.35s">
+            <img src="./images/mem7.jpeg" alt="Memory 7">
+            <p>✨ Joyful Glow </p>
+          </div>
+          <div class="polaroid" style="--r: 4deg; --d: 0.4s">
+            <img src="./images/mem8.jpeg" alt="Memory 8">
+            <p>✨ Hopeful Soul 💛</p>
+          </div>
+          <div class="polaroid" style="--r: -1deg; --d: 0.45s">
+            <img src="./images/mem9.jpeg" alt="Memory 9">
+            <p>Wanderlust 🎀</p>
+          </div>
+          <div class="polaroid" style="--r: 3deg; --d: 0.5s">
+            <img src="./images/mem10.jpeg" alt="Memory 10">
+            <p>Soulful Smile 🎂</p>
+          </div>
+        </div>
+      
+        <div class="close__memories">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BIRTHDAY WISHES WALL ===== -->
+    <div class="box__wishes">
+      <div class="wishes__border">
+        <h2 class="wishes__title">🌟 Birthday Wishes 🌟</h2>
+        <div class="wishes__grid">
+          <div class="wish__card" style="--wc: #fffde7; --wr: -2deg; --wd: 0.1s">
+            <div class="wish__icon">👑</div>
+            <p>Happy birthday to the most amazing girl I know! Your smile honestly lights up every single room, Raksha! 🎉</p>
+          </div>
+          <div class="wish__card" style="--wc: #e3f2fd; --wr: 1.5deg; --wd: 0.2s">
+            <div class="wish__icon">💅</div>
+            <p>A girl like you deserves the whole world — kind, funny, beautiful inside and out. Absolutely iconic! ✨</p>
+          </div>
+          <div class="wish__card" style="--wc: #fff9c4; --wr: -1deg; --wd: 0.3s">
+            <div class="wish__icon">💕</div>
+            <p>Another year of girl talks, adventures and laughing until it hurts. You're my favourite person! 🥰</p>
+          </div>
+          <div class="wish__card" style="--wc: #e3f2fd; --wr: 2deg; --wd: 0.4s">
+            <div class="wish__icon">🍰</div>
+            <p>Wishing you a day full of cake, compliments, and zero drama. You deserve every good thing, bestie! 🥳</p>
+          </div>
+          <div class="wish__card" style="--wc: #fffde7; --wr: -1.5deg; --wd: 0.5s">
+            <div class="wish__icon">🌸</div>
+            <p>So lucky to call you my best friend. Happy birthday queen — today is completely YOUR day! 👑💛</p>
+          </div>
+          <div class="wish__card" style="--wc: #e3f2fd; --wr: 1deg; --wd: 0.6s">
+            <div class="wish__icon">🦋</div>
+            <p>May this year be your most beautiful chapter yet. You're glowing, girl — keep shining! 💙✨</p>
+          </div>
+        </div>
+        <div class="close__wishes">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MAKE A WISH CAKE ===== -->
+    <div class="box__cake">
+      <div class="cake__border">
+        <p class="cake__wish__msg" id="cakeWishMsg">✨ Wish sent, bestie! 🎊✨</p>
+        <div class="candle__row">
+          <div class="candle" title="Click to blow!">
+            <div class="flame"></div>
+            <div class="smoke"></div>
+            <div class="wax"></div>
+          </div>
+          <div class="candle" title="Click to blow!">
+            <div class="flame"></div>
+            <div class="smoke"></div>
+            <div class="wax"></div>
+          </div>
+          <div class="candle" title="Click to blow!">
+            <div class="flame"></div>
+            <div class="smoke"></div>
+            <div class="wax"></div>
+          </div>
+        </div>
+        <div class="cake__tiers">
+          <div class="tier tier--1"></div>
+          <div class="tier tier--2"></div>
+          <div class="tier tier--3"></div>
+        </div>
+        <div class="cake__plate"></div>
+        <p class="cake__instruction">🔥 Click each candle flame to blow it out!</p>
+        <div class="close__cake">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Floating age badge -->
+  <div class="floating-age" id="ageBadge">
+    <span class="age-number">20</span>
+    <span>today! 🎉</span>
+  </div>
+
+  <!-- ===== MUSIC BUTTON ===== -->
+  <button id="btn__music" title="Play Happy Birthday">
+    <i class="fa-solid fa-music"></i>
+  </button>
+
+  <!-- ===== BALLOONS ===== -->
+  <!-- ===== FIREWORKS CANVAS ===== -->
+  <canvas id="fireworksCanvas"></canvas>
+
+  <!-- ===== PHOTO LIGHTBOX ===== -->
+  <div id="lightbox">
+    <button id="lbClose" title="Close">✕</button>
+    <button id="lbPrev" title="Previous">&#8249;</button>
+    <img id="lbImg" src="" alt="Memory photo">
+    <button id="lbNext" title="Next">&#8250;</button>
+  </div>
+
+  <!-- ===== SECRET MESSAGE MODAL ===== -->
+  <div id="secretModal">
+    <div id="secretCard">
+      <div class="secret-stars">✨ ✨ ✨</div>
+      <div class="secret-emoji">💌</div>
+      <p class="secret-text">You are my best friend in the whole world, Raksha 🌍</p>
+      <p class="secret-sub">Triple-click your name any time to see this 🤫</p>
+      <button id="secretClose">Close 💖</button>
+    </div>
+  </div>
+
+  <div class="balloon-wrap">
+    <div class="balloon" style="--bc:#FFD60A; --bf:3.2s" data-msg="You're a queen! 👑✨">
+      <div class="balloon-body"></div>
+      <div class="balloon-knot"></div>
+      <div class="balloon-string"></div>
+    </div>
+    <div class="balloon" style="--bc:#1976D2; --bf:2.8s" data-msg="Stay gorgeous girl! 💅">
+      <div class="balloon-body"></div>
+      <div class="balloon-knot"></div>
+      <div class="balloon-string"></div>
+    </div>
+    <div class="balloon" style="--bc:#FFB300; --bf:3.5s" data-msg="Best year yet! 🎂">
+      <div class="balloon-body"></div>
+      <div class="balloon-knot"></div>
+      <div class="balloon-string"></div>
+    </div>
+    <div class="balloon" style="--bc:#42A5F5; --bf:3.0s" data-msg="You glow girl! 🌸💙">
+      <div class="balloon-body"></div>
+      <div class="balloon-knot"></div>
+      <div class="balloon-string"></div>
+    </div>
+    <div class="balloon" style="--bc:#FFF176; --bf:2.6s" data-msg="Keep shining queen! ✨">
+      <div class="balloon-body"></div>
+      <div class="balloon-knot"></div>
+      <div class="balloon-string"></div>
+    </div>
+  </div>
+
+
+  <!-- Original script unchanged -->
+  <script>
+    let datetxt = "08 JUNE 2006";
+    let datatxtletter = "Hey Raksha! 🎉 Girl, having you as my best friend is genuinely one of the best things in my life. You're funny, caring, and absolutely iconic in every way. You always know how to make every moment fun and unforgettable — whether it's girl talks, silly moments, or just being there. I hope this birthday is as amazing and beautiful as you are, because you truly deserve all the happiness and love in the world. Thank you for being such an incredible girl and an even better best friend. Happy birthday to my favourite girl! 💛💙🎊🎂";
+    let titleLetter = "To my bestie Raksha 🎉";
+    let charArrDate = datetxt.split('');
+    let charArrDateLetter = datatxtletter.split('');
+    let charArrTitle = titleLetter.split('');
+    let currentIndex = 0;
+    let currentIndexLetter = 0;
+    let currentIndexTitle = 0;
+    let date__of__birth = document.querySelector(".date__of__birth span");
+    let text__letter = document.querySelector(".text__letter p");
+
+    setTimeout(function(){
+      timeDatetxt = setInterval(function(){
+        if(currentIndex < charArrDate.length){
+          date__of__birth.textContent += charArrDate[currentIndex];
+          currentIndex++;
+        } else {
+          let i = document.createElement("i");
+          i.className = "fa-solid fa-star";
+          document.querySelector(".date__of__birth").prepend(i);
+          document.querySelector(".date__of__birth").appendChild(i.cloneNode(true));
+          clearInterval(timeDatetxt);
+        }
+      },100)
+    },12000);
+
+    var intervalContent;
+    var intervalTitle;
+    $("#btn__letter").on("click", function(){
+      $(".box__letter").slideDown();
+      setTimeout(function(){
+        $(".letter__border").slideDown();
+      },1000);
+      setTimeout(function(){
+        intervalTitle = setInterval(function(){
+          if(currentIndexTitle < charArrTitle.length){
+            document.querySelector(".title__letter").textContent += charArrTitle[currentIndexTitle];
+            let i = document.createElement("i");
+            i.className = "fa-solid fa-heart";
+            document.querySelector(".title__letter").appendChild(i);
+            currentIndexTitle++;
+          } else {
+            clearInterval(intervalTitle);
+          }
+        },100);
+      },2000);
+      setTimeout(function(){
+        document.querySelector("#heart__letter").classList.add("animationOp");
+        document.querySelector(".love__img").classList.add("animationOp");
+        document.querySelector("#mewmew").classList.add("animationOp");
+      },2800);
+      setTimeout(function(){
+        document.querySelectorAll(".heart").forEach((item)=>{
+          item.classList.add("animation");
+        })
+      },3500);
+      setTimeout(function(){
+        intervalContent = setInterval(function(){
+          if(currentIndexLetter < charArrDateLetter.length){
+            text__letter.textContent += charArrDateLetter[currentIndexLetter];
+            currentIndexLetter++;
+          } else {
+            clearInterval(intervalContent);
+          }
+        },50);
+      },6000);
+    });
+
+    $(".close").on("click", function(){
+      clearInterval(intervalContent);
+      document.querySelector(".title__letter").textContent = "";
+      text__letter.textContent = "";
+      currentIndexLetter = 0;
+      currentIndexTitle = 0;
+      document.querySelector("#heart__letter").classList.remove("animationOp");
+      document.querySelector(".love__img").classList.remove("animationOp");
+      document.querySelector("#mewmew").classList.remove("animationOp");
+      document.querySelectorAll(".heart").forEach((item)=>{
+        item.classList.remove("animation");
+      });
+      $(".box__letter").slideUp();
+      $(".letter__border").slideUp();
+    });
+
+    // ===== CONFETTI =====
+    function spawnConfetti() {
+      var colors = ['#ff3366','#ff6699','#ff33cc','#ffcc00','#33ccff','#99ff66','#ff99cc','#ffaa00'];
+      for (var n = 0; n < 70; n++) {
+        var piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = (Math.random() * 100) + 'vw';
+        piece.style.top = '-15px';
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.setProperty('--cd', (Math.random() * 1.2).toFixed(2) + 's');
+        document.body.appendChild(piece);
+        setTimeout(function(p){ if(p.parentNode) p.parentNode.removeChild(p); }, 3000, piece);
+      }
+    }
+
+    // ===== MEMORIES =====
+    function resetPolaroidAnimations() {
+      document.querySelectorAll('.polaroid').forEach(function(p) {
+        p.style.animation = 'none';
+        void p.offsetHeight;
+        p.style.animation = '';
+      });
+    }
+
+    $("#btn__memories").on("click", function() {
+      spawnConfetti();
+      resetPolaroidAnimations();
+      $(".box__memories").css("display", "flex").hide().fadeIn(300);
+    });
+
+    $(".close__memories").on("click", function() {
+      $(".box__memories").fadeOut(300);
+    });
+
+    $(".box__memories").on("click", function(e) {
+      if ($(e.target).is(".box__memories")) {
+        $(".box__memories").fadeOut(300);
+      }
+    });
+
+    // ===== WISHES =====
+    function resetWishAnimations() {
+      document.querySelectorAll('.wish__card').forEach(function(w) {
+        w.style.animation = 'none';
+        void w.offsetHeight;
+        w.style.animation = '';
+      });
+    }
+
+    $("#btn__wishes").on("click", function() {
+      spawnConfetti();
+      resetWishAnimations();
+      $(".box__wishes").css("display", "flex").hide().fadeIn(300);
+    });
+
+    $(".close__wishes").on("click", function() {
+      $(".box__wishes").fadeOut(300);
+    });
+
+    $(".box__wishes").on("click", function(e) {
+      if ($(e.target).is(".box__wishes")) {
+        $(".box__wishes").fadeOut(300);
+      }
+    });
+
+    // ===== BIRTHDAY CAKE WITH BLOWABLE CANDLES =====
+    var candlesBlown = 0;
+
+    function resetCake() {
+      candlesBlown = 0;
+      document.querySelectorAll('.candle').forEach(function(c) {
+        c.classList.remove('blown');
+      });
+      var msg = document.getElementById('cakeWishMsg');
+      msg.classList.remove('show');
+      msg.style.animation = 'none';
+      var instr = document.querySelector('.cake__instruction');
+      if (instr) instr.style.display = 'block';
+    }
+
+    $("#btn__cake").on("click", function() {
+      resetCake();
+      $(".box__cake").css("display", "flex").hide().fadeIn(300);
+    });
+
+    $(".close__cake").on("click", function() {
+      $(".box__cake").fadeOut(300);
+    });
+
+    $(".box__cake").on("click", function(e) {
+      if ($(e.target).is(".box__cake")) {
+        $(".box__cake").fadeOut(300);
+      }
+    });
+
+    $(document).on("click", ".candle:not(.blown)", function() {
+      $(this).addClass('blown');
+      candlesBlown++;
+      if (candlesBlown >= 3) {
+        setTimeout(function() {
+          var instr = document.querySelector('.cake__instruction');
+          if (instr) instr.style.display = 'none';
+          var msg = document.getElementById('cakeWishMsg');
+          msg.style.animation = 'none';
+          void msg.offsetHeight;
+          msg.style.animation = '';
+          msg.classList.add('show');
+          spawnConfetti();
+        }, 600);
+      }
+    });
+
+    // ===== SHOOTING STARS =====
+    function createShootingStar() {
+      var star = document.createElement('div');
+      star.className = 'shooting-star';
+      star.style.top = (8 + Math.random() * 55) + 'vh';
+      star.style.left = '-160px';
+      document.body.appendChild(star);
+      setTimeout(function() { if (star.parentNode) star.parentNode.removeChild(star); }, 1400);
+    }
+    setTimeout(createShootingStar, 3000);
+    setInterval(createShootingStar, 5500);
+
+    // ===== AGE BADGE =====
+    (function() {
+      var bday = new Date("2006-06-08");
+      var today = new Date();
+      var age = today.getFullYear() - bday.getFullYear();
+      var m = today.getMonth() - bday.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < bday.getDate())) age--;
+      var badge = document.getElementById('ageBadge');
+      if (badge) badge.querySelector('.age-number').textContent = age;
+    })();
+
+    // ===== COUNTDOWN BANNER =====
+    function updateCountdown() {
+      var now = new Date();
+      var bday = new Date(now.getFullYear(), 5, 8, 0, 0, 0); // June 8
+      if (now >= bday) bday.setFullYear(bday.getFullYear() + 1);
+      var diff = bday - now;
+      if (diff <= 0) {
+        var banner = document.getElementById('cdBanner');
+        banner.className = 'birthday-now';
+        banner.innerHTML = '🎉🎂 Today is Raksha\'s Birthday! Happy Birthday bestie! 🎂🎉';
+        return;
+      }
+      var days  = Math.floor(diff / 864e5);
+      var hours = Math.floor((diff % 864e5) / 36e5);
+      var mins  = Math.floor((diff % 36e5)  / 6e4);
+      var secs  = Math.floor((diff % 6e4)   / 1000);
+      document.getElementById('cdDays').textContent  = days;
+      document.getElementById('cdHours').textContent = hours;
+      document.getElementById('cdMins').textContent  = mins;
+      document.getElementById('cdSecs').textContent  = secs;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ===== MUSIC BUTTON (Web Audio - Happy Birthday + fav song upload) =====
+    var audioCtx = null;
+    var isMusicPlaying = false;
+    var songLoopTimeout = null;
+    var favAudio = new Audio('./images/birthday song.mp3');
+    favAudio.loop = true;
+    favAudio.volume = 0.75;
+
+    // [frequency Hz, duration seconds]  0 = rest
+    var HB = [
+      [261.63,.18],[261.63,.18],[293.66,.36],[261.63,.36],[349.23,.36],[329.63,.72],[0,.25],
+      [261.63,.18],[261.63,.18],[293.66,.36],[261.63,.36],[392.00,.36],[349.23,.72],[0,.25],
+      [261.63,.18],[261.63,.18],[523.25,.36],[440.00,.36],[349.23,.36],[329.63,.36],[293.66,.72],[0,.25],
+      [466.16,.18],[466.16,.18],[440.00,.36],[349.23,.36],[392.00,.36],[349.23,.9]
+    ];
+
+    function playSong() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      var t = audioCtx.currentTime + 0.05;
+      var total = 0;
+      HB.forEach(function(n) {
+        if (n[0] > 0) {
+          var osc = audioCtx.createOscillator();
+          var gain = audioCtx.createGain();
+          osc.connect(gain); gain.connect(audioCtx.destination);
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(n[0], t + total);
+          gain.gain.setValueAtTime(0.28, t + total);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + total + n[1] - 0.02);
+          osc.start(t + total);
+          osc.stop(t + total + n[1]);
+        }
+        total += n[1];
+      });
+      return total;
+    }
+
+    $("#btn__music").on("click", function() {
+      if (isMusicPlaying) {
+        isMusicPlaying = false;
+        clearTimeout(songLoopTimeout);
+        if (favAudio) { favAudio.pause(); favAudio.currentTime = 0; }
+        if (audioCtx) { audioCtx.close(); audioCtx = null; }
+        $(this).html('<i class="fa-solid fa-music"></i>').removeClass('playing');
+      } else {
+        isMusicPlaying = true;
+        $(this).html('<i class="fa-solid fa-pause"></i>').addClass('playing');
+        favAudio.currentTime = 0;
+        favAudio.play();
+      }
+    });
+
+    // ===== BALLOONS =====
+    $(document).on("click", ".balloon:not(.popped)", function() {
+      var $b = $(this);
+      $b.addClass("popped");
+      var msg = $b.data("msg");
+      var $msg = $('<div class="balloon-msg">' + msg + '</div>');
+      $b.prepend($msg);
+      spawnConfetti();
+    });
+
+    // ===== GLITTER CURSOR TRAIL =====
+    var sparkColors = ['#FFD60A','#FFB300','#1976D2','#42A5F5','#90CAF9','#FFF176','#fff'];
+    $(document).on('mousemove', function(e) {
+      for (var i = 0; i < 3; i++) {
+        (function() {
+          var $s = $('<div class="cursor-spark"></div>');
+          var offX = (Math.random() - 0.5) * 14;
+          var offY = (Math.random() - 0.5) * 14;
+          $s.css({
+            left: e.clientX + offX,
+            top: e.clientY + offY,
+            background: sparkColors[Math.floor(Math.random() * sparkColors.length)],
+            width: (5 + Math.random() * 7) + 'px',
+            height: (5 + Math.random() * 7) + 'px'
+          });
+          $('body').append($s);
+          setTimeout(function() { $s.remove(); }, 720);
+        })();
+      }
+    });
+
+    // ===== FIREWORKS =====
+    (function() {
+      var canvas = document.getElementById('fireworksCanvas');
+      var ctx = canvas.getContext('2d');
+      var W, H, particles = [];
+
+      function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function rand(a, b) { return a + Math.random() * (b - a); }
+      var fwColors = ['#FFD60A','#FFB300','#FFF176','#1976D2','#42A5F5','#90CAF9','#fff','#FFCC02'];
+
+      function burst(x, y) {
+        for (var i = 0; i < 55; i++) {
+          var angle = rand(0, Math.PI * 2);
+          var speed = rand(2, 7);
+          particles.push({
+            x: x, y: y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            color: fwColors[Math.floor(Math.random() * fwColors.length)],
+            radius: rand(2, 4.5),
+            decay: rand(0.012, 0.022),
+            gravity: rand(0.05, 0.12)
+          });
+        }
+      }
+
+      function launchRocket() {
+        var x = rand(W * 0.15, W * 0.85);
+        var y = rand(H * 0.1, H * 0.45);
+        burst(x, y);
+      }
+
+      function loop() {
+        requestAnimationFrame(loop);
+        ctx.clearRect(0, 0, W, H);
+        for (var i = particles.length - 1; i >= 0; i--) {
+          var p = particles[i];
+          p.x += p.vx; p.y += p.vy; p.vy += p.gravity;
+          p.vx *= 0.97; p.vy *= 0.97;
+          p.alpha -= p.decay;
+          if (p.alpha <= 0) { particles.splice(i, 1); continue; }
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+      loop();
+
+      // launch fireworks periodically
+      setTimeout(function() { launchRocket(); }, 2000);
+      setTimeout(function() { launchRocket(); }, 3200);
+      setInterval(function() {
+        var count = Math.floor(rand(1, 3));
+        for (var i = 0; i < count; i++) {
+          setTimeout(launchRocket, i * 450);
+        }
+      }, 8000);
+    })();
+
+    // ===== SECRET MESSAGE (triple-click name) =====
+    var secretClicks = 0, secretTimer = null;
+    $('#secretName').on('click', function() {
+      secretClicks++;
+      clearTimeout(secretTimer);
+      secretTimer = setTimeout(function() { secretClicks = 0; }, 600);
+      if (secretClicks >= 3) {
+        secretClicks = 0;
+        $('#secretModal').addClass('open');
+        spawnConfetti();
+      }
+    });
+    $('#secretClose, #secretModal').on('click', function(e) {
+      if (e.target === this) $('#secretModal').removeClass('open');
+    });
+
+    // ===== CLICK-ANYWHERE HEARTS =====
+    var heartEmojis = ['💛','💙','✨','💖','🌟','💫','🎉','💝'];
+    $(document).on('click', function(e) {
+      // only fire on bare background clicks (not buttons/inputs/modals)
+      if ($(e.target).closest('button, input, a, .box__letter, .box__memories, .box__wishes, .box__cake, #secretModal, #lightbox, .balloon, .polaroid, #ageBadge, #cdBanner').length) return;
+      for (var i = 0; i < 6; i++) {
+        (function() {
+          var $h = $('<div class="float-heart">' + heartEmojis[Math.floor(Math.random() * heartEmojis.length)] + '</div>');
+          $h.css({
+            left: (e.clientX + (Math.random() - 0.5) * 60) + 'px',
+            top:  (e.clientY + (Math.random() - 0.5) * 30) + 'px',
+            animationDuration: (1 + Math.random() * 0.6) + 's',
+            fontSize: (0.9 + Math.random() * 0.8) + 'rem'
+          });
+          $('body').append($h);
+          setTimeout(function() { $h.remove(); }, 2100);
+        })();
+      }
+    });
+
+    // ===== EMOJI SNOW =====
+    var snowEmojis = ['🎂','💛','💙','✨','🌟','🎉','🎈','💫','⭐'];
+    function spawnSnowFlake() {
+      var $f = $('<div class="emoji-flake">' + snowEmojis[Math.floor(Math.random() * snowEmojis.length)] + '</div>');
+      var dur = 7 + Math.random() * 8;
+      var sway = ((Math.random() - 0.5) * 80).toFixed(0) + 'px';
+      $f.css({
+        left: (Math.random() * 100) + 'vw',
+        fontSize: (0.9 + Math.random() * 1.0) + 'rem',
+        animationDuration: dur + 's',
+        '--sway': sway
+      });
+      $('body').append($f);
+      setTimeout(function() { $f.remove(); }, (dur + 0.5) * 1000);
+    }
+    // stagger initial batch
+    for (var si = 0; si < 8; si++) {
+      setTimeout(spawnSnowFlake, si * 600);
+    }
+    setInterval(spawnSnowFlake, 1800);
+
+    // ===== PHOTO LIGHTBOX =====
+    var lbImages = [];
+    var lbIndex = 0;
+
+    function openLightbox(idx) {
+      lbIndex = idx;
+      $('#lbImg').attr('src', lbImages[lbIndex]);
+      $('#lightbox').addClass('open');
+    }
+    function lbMove(dir) {
+      lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+      $('#lbImg').css('opacity', 0).attr('src', lbImages[lbIndex]).animate({ opacity: 1 }, 200);
+    }
+
+    // collect all polaroid images after DOM ready
+    $('.memories__grid .polaroid img').each(function(i) {
+      lbImages.push($(this).attr('src'));
+    });
+
+    $(document).on('click', '.memories__grid .polaroid img', function() {
+      var src = $(this).attr('src');
+      lbIndex = lbImages.indexOf(src);
+      if (lbIndex < 0) lbIndex = 0;
+      openLightbox(lbIndex);
+    });
+    // make polaroid images look clickable
+    $('.memories__grid .polaroid img').css('cursor', 'zoom-in');
+
+    $('#lbClose').on('click', function() { $('#lightbox').removeClass('open'); });
+    $('#lightbox').on('click', function(e) { if (e.target === this) $('#lightbox').removeClass('open'); });
+    $('#lbPrev').on('click', function(e) { e.stopPropagation(); lbMove(-1); });
+    $('#lbNext').on('click', function(e) { e.stopPropagation(); lbMove(1); });
+    // keyboard navigation
+    $(document).on('keydown', function(e) {
+      if (!$('#lightbox').hasClass('open')) return;
+      if (e.key === 'ArrowLeft')  lbMove(-1);
+      if (e.key === 'ArrowRight') lbMove(1);
+      if (e.key === 'Escape')     $('#lightbox').removeClass('open');
+    });
+  </script>
+</body>
+</html>
